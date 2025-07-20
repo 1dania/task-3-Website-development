@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Pose Status Dashboard</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        table { border-collapse: collapse; width: 50%; }
+        th, td { border: 1px solid #aaa; padding: 8px; text-align: center; }
+        th { background-color: #f2f2f2; }
+        button { padding: 5px 10px; }
+    </style>
+</head>
+<body>
+    <h2>Run Pose Table</h2>
+    <table id="poseTable">
+        <tr><th>ID</th><th>Status</th><th>Action</th></tr>
+    </table>
+
+    <script>
+        async function loadPoseData() {
+            const res = await fetch('get_run_pose.php');
+            const data = await res.json();
+            const table = document.getElementById("poseTable");
+            data.forEach(row => {
+                const tr = document.createElement("tr");
+                tr.innerHTML = `
+                    <td>${row.id}</td>
+                    <td>${row.status}</td>
+                    <td><button onclick="updateStatus(${row.id})">Set to 0</button></td>
+                `;
+                table.appendChild(tr);
+            });
+        }
+
+        async function updateStatus(id) {
+            await fetch('update_status.php?id=' + id);
+            location.reload();
+        }
+
+        loadPoseData();
+    </script>
+</body>
+</html>
