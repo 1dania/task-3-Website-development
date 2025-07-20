@@ -1,0 +1,9 @@
+CREATE DATABASE robot_db;
+USE robot_db;
+
+CREATE TABLE run_pose (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    status TINYINT
+);
+
+INSERT INTO run_pose (status) VALUES (1), (1), (1);
